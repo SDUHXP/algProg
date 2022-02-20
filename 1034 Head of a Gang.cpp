@@ -10,18 +10,19 @@ vector<vector<int>>Rec(maxN);
 bool visit[maxN] = {0};
 int weight[maxN] = {0};
 int cnt = 0;        //num of all monitored person
+map<string,int>name2Id;
+map<int,string>id2Name;
 int dfs(int cur,int &num,int &head){
     int totalW = 0;
     for(int i=0;i<Rec[cur].size();i++){
         int tar = Rec[cur][i];
-        if(relation[cur][tar]){
-            totalW += relation[cur][tar];
-            relation[cur][tar] = relation[tar][cur] = 0;
-        }
+        totalW += relation[cur][tar];
+        relation[cur][tar] = relation[tar][cur] = 0;
         if(!visit[tar]){
             visit[tar] = true;
             num ++;
             if(weight[cur]>weight[head])  head = cur;
+            else if(weight[cur]==weight[head] && id2Name[cur]<id2Name[head]) head = cur;
             totalW  += dfs(tar,num,head);
         }
     }
@@ -30,8 +31,6 @@ int dfs(int cur,int &num,int &head){
 int main(){
     int N,K,W; scanf("%d%d",&N,&K);
     string str1,str2;
-    map<string,int>name2Id;
-    map<int,string>id2Name;
     for(int i=0;i<N;i++){
         cin>>str1>>str2>>W;
         if(name2Id[str1]==0){
