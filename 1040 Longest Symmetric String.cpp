@@ -26,11 +26,30 @@ int dpSolve(string str){
     return ans;
 }
 int hashSolve(string str){
+
     return 0;
+}
+int computeWidth(string str,int left,int right){
+    while(left>=0&&right<str.length()){
+        if(str[left]!=str[right]) break;
+        left --; right++;
+    }
+    return max(right-left-1,0);
+}
+int centralExtension(string str){
+    //use str[i] as definite central or double centre
+    int ans = 0;
+    for(int i=0;i<=str.length();i++){
+        int cenLen1 = computeWidth(str,i,i);
+        int cenLen2 = computeWidth(str,i,i+1);
+        ans = max(ans,max(cenLen1,cenLen2));
+     }
+     return ans;
 }
 
 int main(){
     string str;  getline(cin,str);
-    int res = dpSolve(str);
+//    int res = dpSolve(str);
+    int res = centralExtension(str);
     cout<<res<<endl;
 }
