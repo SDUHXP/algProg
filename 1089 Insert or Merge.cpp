@@ -26,8 +26,8 @@ int main(){
     int step = 2;
     bool flag = false;
     while(step<=N){
-        for(int i=1;i*step<=N;i++)
-        sort(orgCopy.begin()+(i-1)*step,orgCopy.begin()+min(i*step,N));
+        for(int i=0;i*step<N;i++)
+        sort(orgCopy.begin()+i*step,orgCopy.begin()+min((i+1)*step,N));
         if(flag==true)  {prtVec(orgCopy); return 0;}
         if(orgCopy==mediacy)    flag = true;
         step *= 2;
