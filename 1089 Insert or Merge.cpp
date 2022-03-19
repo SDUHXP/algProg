@@ -4,8 +4,8 @@
 using namespace std;
 vector<int>origin,mediacy,orgCopy;
 void prtVec(vector<int>&vec){
-    for(int i=0;i<vec.size();i++)   printf("%s%d",(i==0?"":" "),vec[i]);
-    cout<<endl;         return;
+    for(int i=0;i<vec.size();i++)   printf("%d%s",vec[i],(i==vec.size()-1?"\n":" "));
+    return;
 }
 int main(){
     int N; scanf("%d",&N);
@@ -13,17 +13,15 @@ int main(){
     for(int i=0;i<N;i++) scanf("%d",&origin[i]);
     for(int i=0;i<N;i++) scanf("%d",&mediacy[i]);
     orgCopy = origin;
-    //simulate insertion sort
-    for(int i=1;i<=origin.size();i++){
+    for(int i=2;i<=origin.size();i++){
         sort(origin.begin(),origin.begin()+i);
-        if(i>1 && origin==mediacy){
+        if(origin==mediacy){
             printf("Insertion Sort\n");
             sort(origin.begin(),origin.begin()+i+1);
             prtVec(origin);
             return 0;
         }
     }
-    //simulate merge sort
     printf("Merge Sort\n");
     int step = 2;
     bool flag = false;
