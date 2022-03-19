@@ -32,7 +32,7 @@ int main(){
         }
     if(flag){
         printf("Insertion Sort\n");
-        sort(org.begin(),org.begin()+pos);
+        sort(org.begin(),org.begin()+pos+1);
         prtVec(org);
     }
     else{
