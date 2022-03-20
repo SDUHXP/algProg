@@ -1,6 +1,5 @@
 #include <iostream>
 #include <algorithm>
-#include <map>
 #include <vector>
 #include <algorithm>
 using namespace std;
@@ -33,7 +32,8 @@ int main(){
     vector<interval> cache;
     for(int i=0;i<N;i++){
         if(sum[N]-sum[i]<M) continue;
-        int pos = binSearch(sum,i+1,N,sum[i]+M);   //[i+1,pos] is ans
+//        int pos = binSearch(sum,i+1,N,sum[i]+M);   //[i+1,pos] is ans
+        int pos = lower_bound(sum+(i+1),sum+N,sum[i]+M)-sum;   //[i+1,pos] is ans
         cache.push_back(interval(sum[pos]-sum[i],i+1,pos));
     }
     sort(cache.begin(),cache.end());
