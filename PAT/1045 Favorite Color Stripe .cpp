@@ -15,7 +15,8 @@ int main(){
     int cnt[L] = {0};
     for(int j=0;j<L;j++){
         int val;       scanf("%d",&val);
-        if(pri[val])   stripe.push_back(pri[val]);
+        //if(pri[val])   stripe.push_back(pri[val]);
+        if(pri[val])   stripe.push_back(val);       //this will cause time limited , reason not specific
     }
     int dp[stripe.size()] = {0};
     for(int i=0;i<stripe.size();i++) dp[i] = 1;
@@ -28,7 +29,8 @@ int main(){
     for(int i=1;i<temp.size();i++){
         int tempL = 0;
         for(int j=0;j<i;j++)
-            if(temp[j]<=temp[i]) tempL = max(tempL,dp[j]);
+//            if(temp[j]<=temp[i]) tempL = max(tempL,dp[j]);
+            if(pri[temp[j]]<=pri[temp[i]]) tempL = max(tempL,dp[j]);   //this cause time limited, reason not specific
         dp[i] += tempL;
     }
     int maxL = 0;
