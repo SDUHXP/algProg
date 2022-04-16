@@ -1,3 +1,4 @@
+#if 0
 #include <iostream>
 #include <map>
 #include <vector>
@@ -37,3 +38,30 @@ int main(){
     for(int i=0;i<temp.size();i++)  maxL = max(dp[i],maxL);
     printf("%d\n",maxL);
 }
+#else
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+int main(){
+    int N; scanf("%d",&N);
+    int M; scanf("%d",&M);
+    int favor[M+1];
+    for(int i=1;i<=M;i++)   scanf("%d",&favor[i]);
+    int L; scanf("%d",&L);
+    int stripe[L+1];
+    for(int j=1;j<=L;j++){
+        scanf("%d",&stripe[j]);
+    }
+    int dp[M+1][L+1] = {0};
+    memset(dp,0,sizeof(dp));
+    //dynamic programing permits extending contents
+    for(int i=1;i<=M;i++)
+        for(int j=1;j<=L;j++){
+            int maxDp = max(dp[i][j-1],dp[i-1][j]);
+            if(favor[i]==stripe[j]) dp[i][j] = maxDp + 1;   //
+            else dp[i][j] = maxDp;
+        }
+    printf("%d\n",dp[M][L]);
+}
+#endif
