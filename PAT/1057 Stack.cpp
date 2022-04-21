@@ -2,7 +2,6 @@
 #include <iostream>
 #include <cstring>
 #include <fstream>
-#include <algorithm>
 #include <cmath>
 using namespace std;
 const int maxL = 100005;
@@ -14,14 +13,13 @@ int main(){
     int N; scanf("%d",&N);
     char op[50];
     int curLen = 0;   //current length of stack Array
-    int curEnd = 0; //current end of stack Array
     ofstream outFile("./result.txt");
     for(int i=0;i<N;i++){
         cin>>op;
         if(strcmp(op,"Pop")==0){
             if(curLen==0){
-//                printf("Invalid\n");
-                outFile<<"Invalid\n";
+                printf("Invalid\n");
+//                outFile<<"Invalid\n";
                 continue;
             }
             int val = stackArr[curLen-1];
@@ -33,8 +31,8 @@ int main(){
         }
         else if(strcmp(op,"PeekMedian")==0){
             if(curLen==0){
-//                    printf("Invalid\n");
-                    outFile<<"Invalid\n";
+                  printf("Invalid\n");
+//                    outFile<<"Invalid\n";
                     continue;
                 }
             int median = (curLen+1)/2;
