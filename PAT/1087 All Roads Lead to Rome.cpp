@@ -11,13 +11,15 @@ bool visit[maxN];
 vector<int>path;
 void dijkstraDfs(int st,int dest,int N){
     fill(cost,cost+maxN,inf);
-    cost[st] = 0;   int trans = 0;   level[st] = 0;
+    cost[st] = 0;    level[st] = 0;
     for(int i=1;i<=N;i++){
+        int trans = 0;
         for(int j=1;j<=N;j++){
             if(!visit[j] && cost[j]<cost[trans]) trans = j;
         }
         visit[trans] = true;
         for(int j=1;j<=N;j++){
+            if(graph[trans][j]==0) continue;
             int tempCost = cost[trans]+graph[trans][j];
             int tempGain = gain[trans]+happy[j];
             if(tempCost<cost[j]){
@@ -62,7 +64,7 @@ int main(){
         nameMap[it->second] = it->first;
 
     int cur = dest;
-    while(pre[cur]!=1){
+    while(cur!=1){
         path.push_back(cur);
         cur = pre[cur];
     }
