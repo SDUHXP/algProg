@@ -2,8 +2,8 @@
 //VC++ round half away from zero
 #include <iostream>
 #include <vector>
-#include <algorithm>
 #include <cstring>
+#include <algorithm>
 using namespace std;
 const int maxN = 1015;
 int graph[maxN][maxN];
@@ -11,15 +11,15 @@ vector<vector<int>>adjList;
 bool visit[maxN];
 int dis[maxN];          //dis[i] distance from begin to i
 const int inf = 0x3fffffff;
-void dijkstra(int source,int N,int M,int& minDis,int& totalDis){
+void dijkstra(int source,int N,int M,int D,int& minDis,int& totalDis){
     int num = N+M;
     fill(dis,dis+maxN,inf);
     dis[source] = 0; int trans;
-    //calculate distance from source  (N+M) times
     for(int i=1;i<=num;i++){
         trans = 0;
         for(int j=1;j<=num;j++)
             if(!visit[j] && dis[j]<dis[trans]) trans = j;
+        if(trans<=N && dis[trans]>D) return;
         visit[trans] = true;
         for(int j=0;j<adjList[trans].size();j++){
             int tar = adjList[trans][j];
@@ -27,7 +27,6 @@ void dijkstra(int source,int N,int M,int& minDis,int& totalDis){
                 dis[tar] = dis[trans] + graph[trans][tar];
         }
     }
-    totalDis = 0;
     for(int i=1;i<=N;i++){
           totalDis += dis[i];
           if(dis[i]<minDis) minDis = dis[i];
@@ -50,19 +49,18 @@ int main(){
         adjList[des].push_back(st);
 
     }
-    float minAns=0, totalAns; int ans = -1;
+    int minAns=0, totalAns; int ans = -1;
     for(int i=1;i<=M;i++){
         memset(visit,0,sizeof(visit));
         int minDis = inf; int totalDis = 0;
-        dijkstra(N+i,N,M,minDis,totalDis);
-       // printf("minDis = %.1f  avgDis = %.1f \n",minDis,avgDis);
+        dijkstra(N+i,N,M,D,minDis,totalDis);
         if(minDis>D) continue;
-        if(minDis>minAns){
+        if(minDis>minAns || (minDis==minAns && totalDis<totalAns)){
             ans = i; minAns = minDis; totalAns = totalDis;
         }
     }
     if(ans<0) printf("No Solution\n");
-    else printf("G%d\n%.1f %.1f\n",ans,minAns,(totalAns/N));
+    else printf("G%d\n%.1f %.1f\n",ans,minAns*1.0,(1.0*totalAns/N));
     return 0;
 
 }
