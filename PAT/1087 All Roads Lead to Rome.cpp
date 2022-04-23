@@ -6,31 +6,28 @@ const int maxN = 210;
 const int inf  = 0x3fffffff;
 int happy[maxN],graph[maxN][maxN];
 int cost[maxN],gain[maxN],level[maxN];   //deep[i] stands for deepth from root, level stands for level for path
-int pre[maxN], minCnt[maxN];
-bool visit[maxN];
+int pre[maxN], minCnt[maxN];    bool visit[maxN];
 vector<int>path;
 void dijkstraDfs(int st,int dest,int N){
     fill(cost,cost+maxN,inf);
-    cost[st] = 0;    level[st] = 0;
+    cost[st] = 0;  level[st] = 0; minCnt[st] = 1;
     for(int i=1;i<=N;i++){
         int trans = 0;
-        for(int j=1;j<=N;j++){
-            if(!visit[j] && cost[j]<cost[trans]) trans = j;
-        }
+        for(int j=1;j<=N;j++)   if(!visit[j] && cost[j]<cost[trans]) trans = j;
         visit[trans] = true;
         for(int j=1;j<=N;j++){
             if(graph[trans][j]==0) continue;
             int tempCost = cost[trans]+graph[trans][j];
             int tempGain = gain[trans]+happy[j];
             if(tempCost<cost[j]){
-                minCnt[j] = 1;
+                minCnt[j] = minCnt[trans];
                 cost[j] = tempCost;
                 pre[j] = trans;
                 gain[j] = tempGain;
                 level[j] = level[trans] + 1;
             }
             else if (cost[j]==tempCost ){
-                minCnt[j] ++;
+                minCnt[j] += minCnt[trans];
                 if(tempGain>gain[j]){
                     pre[j] = trans;
                     gain[j] = tempGain;
@@ -72,4 +69,5 @@ int main(){
     cout<<nameMap[1];
     for(auto it=path.rbegin();it!=path.rend();it++)
         cout<<"->"<<nameMap[*it];
+    return 0;
 }
