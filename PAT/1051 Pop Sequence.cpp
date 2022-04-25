@@ -4,21 +4,26 @@ stack<int>st;
 int main(){
     int M,N,K; scanf("%d%d%d",&M,&N,&K);
     while(K--){
-        int val;
-        bool flag = true;
-        st.push(1);
-        int next = 2;
+        int val,next; bool flag = true;
+        next = 1;
+        while(st.size()) st.pop();
         for(int i=0;i<N;i++){
             scanf("%d",&val);
-            if(st.top()==val)  st.pop();
-            else if(st.top()<val){
-                while(next<=val){
-                    st.push(next);
-                    next ++;
+            if(flag){
+                if(st.size()==0 || st.top()<val){
+                    while(next<=val){
+                        st.push(next);
+                        next ++;
+                    }
                 }
-            }
-            else if(val<st.top()){
-                flag = false;
+                if(st.size()>M){
+                    flag = false;
+                    continue;
+                }
+                if(st.top()==val)  st.pop();
+                else {
+                    flag = false;
+                }
             }
         }
         if(flag)    cout<<"YES"<<endl;
