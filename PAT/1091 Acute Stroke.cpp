@@ -17,16 +17,17 @@ struct pos{
 queue<pos>posCache;
 void bfs(int l,int m,int n){
     posCache.push(pos(l,m,n));
+    visit[l][m][n] = true;
     while(posCache.size()){
         auto it = posCache.front();
-        visit[it.lPos][it.mPos][it.nPos] = true;
         blockCnt ++;        for(int idx=0;idx<6;idx++){
             int newL = it.lPos + lDir[idx];
             int newM = it.mPos + mDir[idx];
             int newN = it.nPos + nDir[idx];
-            if(newL<0||newM<0||newN<0) return;
+            if(newL<0||newM<0||newN<0) continue;
             if(visit[newL][newM][newN] || !img[newL][newM][newN]) continue;
             posCache.push(pos(newL,newM,newN));
+            visit[newL][newM][newN] = true;
         }
         posCache.pop();
     }
@@ -38,7 +39,6 @@ int main(){
     for(int l=0;l<L;l++)
         for(int m=0;m<M;m++)
             for(int n=0;n<N;n++) scanf("%d",&img[l][m][n]);
-
     for(int l=0;l<L;l++)
         for(int m=0;m<M;m++)
             for(int n=0;n<N;n++){
