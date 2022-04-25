@@ -10,13 +10,25 @@ const int maxL = 61;
 bool img[maxL][maxM][maxN];
 bool visit[maxL][maxM][maxN];
 int totalVol,blockCnt;
+struct pos{
+    pos(int l,int m,int n):lPos(l),mPos(m),nPos(n){}
+    int lPos,mPos,nPos;
+};
+queue<pos>posCache;
 void bfs(int l,int m,int n){
-    if(l<0||m<0||n<0) return;
-    if(visit[l][m][n] || img[l][m][n]==false) return;
-    visit[l][m][n] = true;
-    blockCnt ++;
-    for(int idx=0;idx<6;idx++){
-        bfs(l+lDir[idx],m+mDir[idx],n+nDir[idx]);
+    posCache.push(pos(l,m,n));
+    while(posCache.size()){
+        auto it = posCache.front();
+        visit[it.lPos][it.mPos][it.nPos] = true;
+        blockCnt ++;        for(int idx=0;idx<6;idx++){
+            int newL = it.lPos + lDir[idx];
+            int newM = it.mPos + mDir[idx];
+            int newN = it.nPos + nDir[idx];
+            if(newL<0||newM<0||newN<0) return;
+            if(visit[newL][newM][newN] || !img[newL][newM][newN]) continue;
+            posCache.push(pos(newL,newM,newN));
+        }
+        posCache.pop();
     }
     return;
 }
