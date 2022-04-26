@@ -8,9 +8,8 @@ int bfs(int root,int& minNum){
     while(eleQue.size()){
         int ft = eleQue.front().first;
         int lev = eleQue.front().second;
-        if(decLst[ft].size()==0) level = lev;
         if(level!=-1 && lev>level) return level;
-        if(lev==level) minNum++;
+        if(decLst[ft].size()==0){level = lev;    minNum++;}
         eleQue.pop();
         for(int i=0;i<decLst[ft].size();i++)
             eleQue.push(make_pair(decLst[ft][i],lev+1));
@@ -29,8 +28,8 @@ int main(){
         }
     }
     int minNum = 0;
-    int minLev = bfs(0,minLev);
-    cout<<minLev<<"   "<<minNum<<endl;
-
-    cout<<P*pow(1+R/100,minLev)<<endl;
+    int minLev = bfs(0,minNum);
+    double price = pow(1+R/100,minLev)*P;
+    printf("%.4lf %d\n",price,minLev);
+    return 0;
 }
