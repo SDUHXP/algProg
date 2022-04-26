@@ -17,7 +17,7 @@ void bfs(int beg){
 }
 int main(){
     int N,M; scanf("%d%d",&N,&M);
-    decLst.resize(N);
+    decLst.resize(N+1);
     for(int i=0;i<M;i++){
         int id,decNum,val; scanf("%d%d",&id,&decNum);
         for(int j=0;j<decNum;j++){
@@ -26,8 +26,8 @@ int main(){
         }
     }
     bfs(1);
-    int maxNum = 0,maxCorIdx;
-    for(auto it=levCnt.begin();it!=levCnt.begin();it++)
+    int maxNum = 0,maxCorIdx = 0;
+    for(auto it=levCnt.begin();it!=levCnt.end();it++)
         if(it->second > maxNum) {maxNum = it->second; maxCorIdx = it->first;}
     printf("%d %d\n",maxNum,maxCorIdx);
 }
