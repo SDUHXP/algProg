@@ -15,6 +15,7 @@ void prtVec(vector<int>&vec){
     cout<<endl;
 }
 node* buildTree(int preL,int preR,int inL,int inR){
+    if(preL>preR) return NULL;
     if(preL==preR){
         node* root = new node(preOrd[preL]);
         return root;
