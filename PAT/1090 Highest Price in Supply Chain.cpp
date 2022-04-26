@@ -1,18 +1,15 @@
 #include <bits/stdc++.h>
 using namespace std;
 vector<vector<int>>desLst;
-map<int,int>saleMap;
 int maxLevel,maxCnt;
-void dfs(int cur,int L){
+void dfs(int cur,int Lev){
     if(desLst[cur].size()==0){
-        if(L>maxLevel){
-            maxLevel = L;
-            maxCnt = 1;
-        }
-        else if(L==maxLevel) maxCnt++;
+        if(Lev>maxLevel){maxLevel = Lev;maxCnt = 1;}
+        else if(Lev==maxLevel) maxCnt++;
+        return;
     };
     for(int i=0;i<desLst[cur].size();i++)
-        dfs(desLst[cur][i],L+1);
+        dfs(desLst[cur][i],Lev+1);
     return ;
 }
 int main(){
@@ -25,6 +22,5 @@ int main(){
         desLst[anc].push_back(i);
     }
     dfs(root,0);
-    cout<<maxLevel<<endl;
     printf("%.2lf %d\n",P*pow(1+R/100,maxLevel),maxCnt);
 }
