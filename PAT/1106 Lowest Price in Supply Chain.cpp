@@ -30,6 +30,6 @@ int main(){
     int minNum = 0;
     int minLev = bfs(0,minNum);
     double price = pow(1+R/100,minLev)*P;
-    printf("%.4lf %d\n",price,minLev);
+    printf("%.4lf %d\n",price,minNum);
     return 0;
 }
