@@ -1,26 +1,28 @@
 #include <bits/stdc++.h>
 using namespace std;
-vector<vector<int>>decLst;
+vector<vector<int>>decLst,pathRec;
 vector<int>weight,path;
-vector<vector<int>>pathRec;
 void dfs(int cur,int sumLeft){
-    path.push_back(cur);
     if(decLst[cur].size()==0 && sumLeft==weight[cur]){
-        cout<<"hello world"<<endl;
-        pathRec.push_back(path);
-        return;
+        path.push_back(weight[cur]);    pathRec.push_back(path);
+        path.pop_back();    return;
     }
     if(sumLeft<=weight[cur]) return;
+    path.push_back(weight[cur]);
     for(int i=0;i<decLst[cur].size();i++){
-        dfs(decLst[cur][i],sumLeft-weight[decLst[cur][i]]);
+        dfs(decLst[cur][i],sumLeft-weight[cur]);
     }
     path.pop_back();
     return;
 }
 void prtPath(vector<int>& path){
     for(auto it=path.begin();it!=path.end();it++)
-        printf("%d%s",weight[*it],it==path.end()-1?"\n":" ");
+        printf("%d%s",*it,it==path.end()-1?"\n":" ");
     return;
+}
+bool pathCmp(const vector<int>& pathA ,const vector<int>&pathB){
+    bool flag  = lexicographical_compare(pathA.begin(),pathA.end(),pathB.begin(),pathB.end());
+    return !flag;
 }
 
 int main(){
@@ -35,6 +37,6 @@ int main(){
         }
     }
     dfs(0,S);
-    cout<<"pathRec.size() == "<<pathRec.size()<<endl;
+    sort(pathRec.begin(),pathRec.end(),pathCmp);
     for(int i=0;i<pathRec.size();i++)  prtPath(pathRec[i]);
 }
