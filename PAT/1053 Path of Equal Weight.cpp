@@ -4,7 +4,7 @@ vector<vector<int>>decLst,pathRec;
 vector<int>weight,path;
 void dfs(int cur,int sumLeft){
     if(decLst[cur].size()==0 && sumLeft==weight[cur]){
-        path.push_back(weight[cur]);    pathRec.push_back(path);
+        path.push_back(weight[cur]);   pathRec.push_back(path);
         path.pop_back();    return;
     }
     if(sumLeft<=weight[cur]) return;
@@ -20,11 +20,9 @@ void prtPath(vector<int>& path){
         printf("%d%s",*it,it==path.end()-1?"\n":" ");
     return;
 }
-bool pathCmp(const vector<int>& pathA ,const vector<int>&pathB){
-    bool flag  = lexicographical_compare(pathA.begin(),pathA.end(),pathB.begin(),pathB.end());
-    return !flag;
+bool pathCmp(const vector<int>&pathA ,const vector<int>&pathB){
+    return !lexicographical_compare(pathA.begin(),pathA.end(),pathB.begin(),pathB.end());
 }
-
 int main(){
     int N,M,S,val; scanf("%d%d%d",&N,&M,&S);
     weight.resize(N);   decLst.resize(N);
@@ -39,4 +37,5 @@ int main(){
     dfs(0,S);
     sort(pathRec.begin(),pathRec.end(),pathCmp);
     for(int i=0;i<pathRec.size();i++)  prtPath(pathRec[i]);
+    return 0;
 }
