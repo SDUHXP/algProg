@@ -19,12 +19,12 @@ void treeTrav(node* root,vector<int>&path,bool pre,bool mirror){
     if(root==NULL) return;
     if(pre==true) path.push_back(root->val);
     if(mirror==false){
-        treeTrav(root->left,path,mirror,pre);
-        treeTrav(root->right,path,mirror,pre);
+        treeTrav(root->left,path,pre,mirror);
+        treeTrav(root->right,path,pre,mirror);
     }
     else{
-        treeTrav(root->right,path,mirror,pre);
-        treeTrav(root->left,path,mirror,pre);
+        treeTrav(root->right,path,pre,mirror);
+        treeTrav(root->left,path,pre,mirror);
     }
     if(pre==false) path.push_back(root->val);
     return;
@@ -44,8 +44,19 @@ int main(){
         root = insNode(root,orgOrd[i]);
     }
     treeTrav(root,travOrd,true,false);
-    prtPath(travOrd); travOrd.clear();
-    treeTrav(root,travOrd,true,true);
-    prtPath(travOrd); travOrd.clear();
+    if(travOrd==orgOrd){
+        printf("YES\n");  travOrd.clear();
+        treeTrav(root,travOrd,false,false);
+        prtPath(travOrd);  return 0;
+    }
+    else{
+        travOrd.clear();  treeTrav(root,travOrd,true,true);
+        if(travOrd==orgOrd){
+            printf("YES\n");  travOrd.clear();
+            treeTrav(root,travOrd,false,true);
+            prtPath(travOrd);  return 0;
+        }
+    }
+    printf("NO\n");
     return 0;
 }
