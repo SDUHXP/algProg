@@ -20,11 +20,10 @@ void levelTrav(int root){
     queue<int>idQue;
     idQue.push(root);
     while(idQue.size()){
-        cout<<"helo world"<<endl;
         int cur = idQue.front();
         if(tree[cur].left!=-1) idQue.push(tree[cur].left);
-        if(tree[cur].left!=-1) idQue.push(tree[cur].right);
-        printf("%d ",tree[cur].val);
+        if(tree[cur].right!=-1) idQue.push(tree[cur].right);
+        printf("%s%d",cur==root?"":" ",tree[cur].val);
         idQue.pop();
     }
     return;
@@ -35,6 +34,7 @@ int main(){
         scanf("%d%d",&tree[i].left,&tree[i].right);
     }
     for(int i=0;i<N;i++) scanf("%d",&val[i]);
+    sort(val,val+N);
     int idx = 0;
     buildTree(0,idx);
     levelTrav(0);
