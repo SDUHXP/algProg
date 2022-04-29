@@ -5,11 +5,15 @@ struct node{
     node *left,*right;
     node():val(0),ht(0),left(NULL),right(NULL){}
 };
+inline int getHt(node* cur){
+    return (cur==NULL?0:cur->ht);
+}
 node* leftRoate(node* root){
     if(root==NULL) return root;
     node* temp = root->right;
-    temp->left = root;
     root->right = temp->left;
+    temp->left = root;
+    root->ht = getHt(root->left)+1;
     return temp;
 }
 node* rightRotate(node* root){
@@ -17,13 +21,10 @@ node* rightRotate(node* root){
     node* temp = root->left;
     root->left = temp->right;
     temp->right = root;
+    root->ht = getHt(root->right)+1;
     return temp;
 }
-inline int getHt(node* cur){
-    return (cur==NULL?0:cur->ht);
-}
 node* insertNode(node*root,int val){
-    cout<<"hello world"<<endl;
     if(root==NULL){
         root = new node(); root->val = val;
         root->ht = 1;       return root;
@@ -59,19 +60,6 @@ node* insertNode(node*root,int val){
     root->ht = max(htL,htR) + 1;
     return root;
 }
-void levelTrav(node* root){
-    queue<node*> nodeQue;
-    nodeQue.push(root);
-    while(nodeQue.size()!=0){
-        node* cur = nodeQue.front();
-        if(cur->left!=NULL) nodeQue.push(cur->left);
-        if(cur->right!=NULL) nodeQue.push(cur->right);
-        printf("(%d,%d) ",cur->val,cur->ht);
-        nodeQue.pop();
-    }
-    return;
-
-}
 int main(){
     int N; scanf("%d",&N);
     node* root = NULL;
@@ -79,7 +67,5 @@ int main(){
         int val; scanf("%d",&val);
         root = insertNode(root,val);
     }
-   // node* cur = root->left->left->left;
-//    printf("%d  %d\n",cur->val,cur->ht);
-    levelTrav(root);
+    printf("%d\n",root->val);
 }
