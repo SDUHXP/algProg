@@ -7,7 +7,7 @@ int main(){
         bool flag = false;
         scanf("%lld%lld%lld",&A,&B,&C);
         printf("Case #%d: ",i);
-//      long long res = A+B;
+      long long res = A+B;
         if(A>0 && B>0 && (A+B<=0)) flag = true;
         else if (A<0 && B<0 &&(A+B>=0)) flag = false;
         else  flag = (A+B>C);
