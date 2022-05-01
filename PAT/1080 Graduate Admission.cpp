@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int maxN = 40005;
-const int maxM = 101;
+const int maxN = 40005,maxM = 101;
 int quota[maxM];
 struct ap{
     int ge,gi,fin,id;
@@ -10,9 +9,7 @@ struct ap{
         if(fin!=oth.fin) return fin>oth.fin;
         else return ge>oth.ge;
         }
-    bool operator==(const ap& oth){
-        return (ge==oth.ge && gi==oth.gi);
-    }
+    bool operator==(const ap& oth){return (ge==oth.ge && gi==oth.gi);}
 }apps[maxN];
 vector<vector<ap>>college;
 void prtVec(vector<ap>&vec){
@@ -34,16 +31,10 @@ int main(){
     for(int i=0;i<N;i++){
         for(int j=0;j<K;j++){
             int tar = apps[i].apSch[j];
-            if(college[tar].size()<quota[tar]){
+            int num = college[tar].size();
+            if(num<quota[tar]||(num==quota[tar]&&college[tar][num-1]==apps[i])){
                 college[tar].push_back(apps[i]);
                 break;
-            }
-            else if(college[tar].size()==quota[tar]){
-                auto it = college[tar].end()-1;
-                if(apps[i]==*it){
-                    college[tar].push_back(apps[i]);
-                    break;
-                }
             }
         }
     }
