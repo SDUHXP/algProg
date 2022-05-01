@@ -32,7 +32,7 @@ int main(){
         for(int j=0;j<K;j++){
             int tar = apps[i].apSch[j];
             int num = college[tar].size();
-            if(num<quota[tar]||(num==quota[tar]&&college[tar][num-1]==apps[i])){
+            if(num<quota[tar]||(num>=quota[tar]&&college[tar][quota[tar]-1]==apps[i])){
                 college[tar].push_back(apps[i]);
                 break;
             }
