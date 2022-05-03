@@ -7,11 +7,12 @@ struct person{
     bool operator<(person&oth){
         if(section!=oth.section) return section<oth.section;
         else if(tot!=oth.tot) return tot>oth.tot;
-        else return virtue>oth.virtue;
+        else if(virtue!=oth.virtue) return virtue>oth.virtue;
+        else return id<oth.id;
     }
 }rcds[maxN];
 int main(){
-    int N,L,H,ignore;  scanf("%d%d%d",&N,&L,&H);
+    int N,L,H,ignore=0;  scanf("%d%d%d",&N,&L,&H);
     for(int i=0;i<N;i++){
         int vir,tal;  scanf("%d%d%d",&rcds[i].id,&vir,&tal);
         rcds[i].virtue = vir; rcds[i].talent = tal;
