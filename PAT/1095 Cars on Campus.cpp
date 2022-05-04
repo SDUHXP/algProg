@@ -2,11 +2,10 @@
 using namespace std;
 const int maxN = 10001;
 struct record{
-    char plate[10];
-    int ts; bool status;    //true for in, and false for out;
+    char plate[10]; int ts;
+    bool status,valid;
 }rcds[maxN];
-map<string,int>parkTim;
-map<string,int>curStatus;    //record the latest potential valid record index
+map<string,int>parkTim,pairStus;    //record the latest potential valid record index
 map<int,int>parkCnt;
 int carCnt;
 int main(){
@@ -19,53 +18,50 @@ int main(){
     }
     sort(rcds,rcds+N,[](record&a,record&b){return a.ts<b.ts;});
     for(int i=0;i<N;i++){
-        int idx = curStatus[rcds[i].plate];
+        int idx = pairStus.find(rcds[i].plate)!=pairStus.end()?pairStus[rcds[i].plate]:-1;  //the latest record require to be paired of same plate
         bool flag = rcds[i].status;
         if(flag==true){
-            curStatus[rcds[i].plate] = i;
-            if(idx==-1) parkCnt[rcds[i].ts] = parkCnt[rcds[idx].ts];
-            else
-            {
-                parkCnt[rcds[idx].ts] --;;
-            }
+            if(idx!=-1) rcds[idx].valid = false;
+            rcds[i].valid = true;
+            pairStus[rcds[i].plate] = i;
         }
-        else if(idx>=0 && flag==false){
+        else if(idx>=0){
             parkTim[rcds[i].plate] += rcds[i].ts - rcds[idx].ts;
-            curStatus[rcds[i].plate] = -1;
-            parkCnt[rcds[i].ts] = --carCnt;
+            pairStus[rcds[i].plate] = -1;
+            rcds[i].valid = true;
         }
-        else continue;
+        else rcds[i].valid = false;
     }
-    vector<string>pltRes;
-    int maxTim = 0;
+    sort(rcds,rcds+N,[](record&a,record&b){if(a.valid!=b.valid) return a.valid>b.valid; else return a.ts<b.ts;});
+    for(int i=0;i<N&&rcds[i].valid;i++){
+        if(rcds[i].status) parkCnt[rcds[i].ts] = ++carCnt;
+        else parkCnt[rcds[i].ts] = --carCnt;
+    }
+    while(K--){
+        scanf("%d:%d:%d",&h,&m,&s);
+        int ts = h*3600+m*60+s;
+        for(auto it=parkCnt.begin();it!=parkCnt.end();it++)
+            if(it->first>=ts){
+                if(it->first==ts) printf("%d\n",it->second);
+                else  printf("%d\n",(--it)->second);
+                break;
+            }
+    }
+
+//    cout<<endl;
+//    for(auto it=parkCnt.begin();it!=parkCnt.end();it++)
+//        printf("%d:%d:%d %d\n",it->first/3600,it->first%3600/60,it->first%60,it->second);
+//    cout<<endl;
+    vector<string>pltRes; int maxTim = 0;
     for(auto it=parkTim.begin();it!=parkTim.end();it++)
         if(it->second>maxTim){
-            pltRes.clear();
-            pltRes.push_back(it->first);
+            pltRes.clear(); pltRes.push_back(it->first);
             maxTim = it->second;
         }
         else if(it->second==maxTim) pltRes.push_back(it->first);
 
-    cout<<endl<<endl;
-    for(auto it=parkCnt.begin();it!=parkCnt.end();it++){
-        int t = it->first;
-        printf("%d:%d:%d %d\n",t/3600,t%3600/60,t%60,it->second);
-    }
-
-    cout<<endl<<endl;
-    while(K--){
-        scanf("%d:%d:%d",&h,&m,&s);
-        int ts = h*3600+m*60+s;
-
-
-    }
-
-    cout<<endl<<endl;
-
     for(int i=0;i<pltRes.size();i++) cout<<pltRes[i]<<" ";
     printf("%02d:%02d:%02d\n",maxTim/3600,maxTim%3600/60,maxTim%60);
-
-    cout<<"carCnt = "<<carCnt<<endl;
 
     return 0;
 }
