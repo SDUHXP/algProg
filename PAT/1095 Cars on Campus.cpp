@@ -7,7 +7,7 @@ struct record{
 }rcds[maxN];
 map<string,int>parkTim,pairStus;    //record the latest potential valid record index
 map<int,int>parkCnt;
-int carCnt;
+int carCnt = 0;
 int main(){
     int N,K; scanf("%d%d",&N,&K);
     int h,m,s; char st[5];
@@ -40,18 +40,10 @@ int main(){
     while(K--){
         scanf("%d:%d:%d",&h,&m,&s);
         int ts = h*3600+m*60+s;
-        for(auto it=parkCnt.begin();it!=parkCnt.end();it++)
-            if(it->first>=ts){
-                if(it->first==ts) printf("%d\n",it->second);
-                else  printf("%d\n",(--it)->second);
-                break;
-            }
+        auto it = parkCnt.upper_bound(ts);
+        it--;
+        printf("%d\n",it->second);
     }
-
-//    cout<<endl;
-//    for(auto it=parkCnt.begin();it!=parkCnt.end();it++)
-//        printf("%d:%d:%d %d\n",it->first/3600,it->first%3600/60,it->first%60,it->second);
-//    cout<<endl;
     vector<string>pltRes; int maxTim = 0;
     for(auto it=parkTim.begin();it!=parkTim.end();it++)
         if(it->second>maxTim){
