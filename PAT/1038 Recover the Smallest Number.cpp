@@ -7,7 +7,7 @@ int main(){
         string str; cin>>str;
         input.push_back(str);
     }
-    sort(input.begin(),input.end());
+    sort(input.begin(),input.end(),[](string&a,string &b){return a+b<b+a;});
 
     for(int i=0;i<N;i++)
         if(i==0) cout<<stoi(input[i]);
