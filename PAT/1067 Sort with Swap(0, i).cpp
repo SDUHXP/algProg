@@ -15,14 +15,10 @@ int main(){
         if(pos[0]!=0){
             int tmpPos = pos[pos[0]];
             swap(arr[tmpPos],arr[pos[0]]);
-            pos[arr[pos[0]]] = arr[pos[0]];
+            pos[pos[0]] = arr[pos[0]];
+            disOrd.erase(pos[0]);
             pos[0] = tmpPos;
-            disOrd.erase(tmpPos);
             if(pos[0]==0) disOrd.erase(0);
-            cout<<"hello ";
-            for(int i=0;i<N;i++)  printf("%d ",arr[i]);
-            cout<<" disOrd.size() = "<<disOrd.size();
-            cout<<endl;
         }
         else{
             int tmpKey = *disOrd.begin();
@@ -31,14 +27,9 @@ int main(){
             pos[tmpKey] = pos[0];
             pos[0] = tmpPos;
             disOrd.insert(0);
-            cout<<"world ";
-            for(int i=0;i<N;i++)  printf("%d ",arr[i]);
-            cout<<" disOrd.size() = "<<disOrd.size();
-            cout<<endl;
         }
         cnt++;
     }
-    for(int i=0;i<N;i++)  printf("%d ",arr[i]);
-    printf("\ncnt=%d\n",cnt);
+    printf("%d\n",cnt);
     return 0;
 }
