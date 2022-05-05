@@ -16,13 +16,10 @@ int main(){
         else rightT[i] = rightT[i+1];
 
     long long sum = 0;
-
-    for(int i=1;i<=len;i++){
-        if(str[i]=='A'){
+    for(int i=1;i<=len;i++)
+        if(str[i-1]=='A'){
             sum += (leftP[i]*rightT[i])%mod;
             sum %= mod;
         }
-    }
     printf("%lld\n",sum);
-
 }
