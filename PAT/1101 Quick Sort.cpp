@@ -22,6 +22,7 @@ int main(){
     printf("%d\n",res.size());
     for(auto it=res.begin();it!=res.end();it++)
         printf("%d%s",*it,it==(--res.end())?"\n":" ");
+    if(res.size()==0) printf("\n");
     return 0;
 
 }
