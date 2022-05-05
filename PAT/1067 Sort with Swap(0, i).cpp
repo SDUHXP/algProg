@@ -7,7 +7,7 @@ int main(){
     int N; scanf("%d",&N);
     for(int i=0;i<N;i++){
          scanf("%d",&arr[i]);
-         if(arr[i]!=i) disOrd.insert(i);
+         if(arr[i]!=i) disOrd.insert(arr[i]);
          pos[arr[i]] = i;
     }
     int cnt = 0;
@@ -19,14 +19,22 @@ int main(){
             pos[0] = tmpPos;
             disOrd.erase(tmpPos);
             if(pos[0]==0) disOrd.erase(0);
+            cout<<"hello ";
+            for(int i=0;i<N;i++)  printf("%d ",arr[i]);
+            cout<<" disOrd.size() = "<<disOrd.size();
+            cout<<endl;
         }
-        else if(pos[0]==0&&disOrd.size()){
+        else{
             int tmpKey = *disOrd.begin();
             int tmpPos = pos[tmpKey];
             swap(arr[pos[0]],arr[tmpPos]);
             pos[tmpKey] = pos[0];
             pos[0] = tmpPos;
             disOrd.insert(0);
+            cout<<"world ";
+            for(int i=0;i<N;i++)  printf("%d ",arr[i]);
+            cout<<" disOrd.size() = "<<disOrd.size();
+            cout<<endl;
         }
         cnt++;
     }
