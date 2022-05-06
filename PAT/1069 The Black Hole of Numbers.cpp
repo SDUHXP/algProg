@@ -12,7 +12,9 @@ int main(){
         diff = maxN - minN;
 
         cout<<setw(4)<<maxN<<" - "<<setw(4)<<minN<<" = "<<setw(4)<<diff<<endl;
-        str = to_string(diff);
+        char tempArr[5]; sprintf(tempArr,"%04d",diff);
+        str.assign(tempArr);
+
     }
     return 0;
 }
