@@ -1,12 +1,15 @@
+//be careful about the order when calculate product of int and float(double/long double)
 #include <bits/stdc++.h>
 using namespace std;
 int main(){
     int N; scanf("%d",&N);
-    double sum = 0;
+    long double sum = 0.0;
     for(int i=0;i<N;i++){
-        double val; scanf("%lf",&val);
-        sum += (N-i)*(i+1)*val;
+        long double val; scanf("%Lf",&val);
+        //correct order is float * int;   not int*float
+        sum += val*(i+1)*(N-i);
     }
-    printf("%.2lf\n",sum);
+    printf("%.2Lf\n",sum);
+
     return 0;
 }
