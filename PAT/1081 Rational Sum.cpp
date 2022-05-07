@@ -24,7 +24,7 @@ int main(){
         scanf("%d/%d",&numerator,&denominator);
         intRes += rationAdd(numeratorRes,denominatorRes,numerator,denominator);
     }
-    if(intRes) printf("%d ",intRes);
+    if(intRes||(intRes==0&&numeratorRes==0)) printf("%d%s",intRes,numeratorRes?" ":"");
     if(numeratorRes) printf("%d/%d\n",numeratorRes,denominatorRes);
     return 0;
 }
