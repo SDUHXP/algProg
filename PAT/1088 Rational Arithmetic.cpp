@@ -10,7 +10,7 @@ long long calFac(long long numerator,long long denominator){
 long long simplify(long long& numerator,long long& denominator){
     long long maxFac = calFac(numerator,denominator);
     numerator /= maxFac;  denominator /= maxFac;
-    if(numerator>0 && denominator<0) {numerator *= -1; denominator *= -1;}
+    if(denominator<0) {numerator *= -1; denominator *= -1;}
     long long quotient = numerator/denominator;
     return quotient;
 }
