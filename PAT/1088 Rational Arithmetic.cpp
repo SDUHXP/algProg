@@ -10,6 +10,7 @@ int calFac(int numerator,int denominator){
 int simplify(int& numerator,int& denominator){
     int maxFac = calFac(numerator,denominator);
     numerator /= maxFac;  denominator /= maxFac;
+    if(numerator>0 && denominator<0) {numerator *= -1; denominator *= -1;}
     int quotient = numerator/denominator;
     return quotient;
 }
@@ -64,6 +65,7 @@ int main(){
     prtFac(numerator1,denominator1);    printf(" / ");
     prtFac(numerator2,denominator2);    printf(" = ");
     numeratorRes = numerator1; denominatorRes = denominator1;
+    if(numerator2==0){printf("Inf\n");  return 0; }
     facMultiply(numeratorRes,denominatorRes,denominator2,numerator2);
     prtFac(numeratorRes,denominatorRes);  printf("\n");
 
