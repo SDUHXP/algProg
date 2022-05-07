@@ -1,47 +1,47 @@
 #include <bits/stdc++.h>
 using namespace std;
-int calFac(int numerator,int denominator){
+long long calFac(long long numerator,long long denominator){
     while(numerator%denominator){
-        int temp = numerator%denominator;
+        long long temp = numerator%denominator;
         numerator = denominator; denominator = temp;
     }
     return abs(denominator);
 }
-int simplify(int& numerator,int& denominator){
-    int maxFac = calFac(numerator,denominator);
+long long simplify(long long& numerator,long long& denominator){
+    long long maxFac = calFac(numerator,denominator);
     numerator /= maxFac;  denominator /= maxFac;
     if(numerator>0 && denominator<0) {numerator *= -1; denominator *= -1;}
-    int quotient = numerator/denominator;
+    long long quotient = numerator/denominator;
     return quotient;
 }
-void prtFac(int numerator,int denominator){
+void prtFac(long long numerator,long long denominator){
     if(numerator==0) {printf("0"); return;}
     bool negative = false;
     if(numerator<0)  {printf("(-"); negative = true; numerator = -numerator;}
     if(numerator/denominator!=0) printf("%d",numerator/denominator);
     if(numerator%denominator!=0){
       if(numerator/denominator) printf(" ");
-      printf("%d/%d",numerator%denominator,denominator);
+      printf("%lld/%lld",numerator%denominator,denominator);
     }
     if(negative) printf(")");
     return;
 }
-void facAdd(int& numeratorRes,int& denominatorRes,int numerator,int denominator){
+void facAdd(long long& numeratorRes,long long& denominatorRes,long long numerator,long long denominator){
     numeratorRes = numeratorRes*denominator + numerator*denominatorRes;
     denominatorRes = denominatorRes*denominator;
     simplify(numeratorRes,denominatorRes);
     return;
 }
-void facMultiply(int& numeratorRes,int& denominatorRes,int numerator,int denominator){
+void facMultiply(long long& numeratorRes,long long& denominatorRes,long long numerator,long long denominator){
     numeratorRes *= numerator;
     denominatorRes *= denominator;
     simplify(numeratorRes,denominatorRes);
     return;
 }
 int main(){
-    int numerator1,denominator1,numerator2,denominator2;
-    int numeratorRes,denominatorRes;
-    scanf("%d/%d%d/%d",&numerator1,&denominator1,&numerator2,&denominator2);
+    long long numerator1,denominator1,numerator2,denominator2;
+    long long numeratorRes,denominatorRes;
+    scanf("%lld/%lld%lld/%lld",&numerator1,&denominator1,&numerator2,&denominator2);
     simplify(numerator1,denominator1);  simplify(numerator2,denominator2);
 
     prtFac(numerator1,denominator1);    printf(" + ");
