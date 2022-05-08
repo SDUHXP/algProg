@@ -3,7 +3,7 @@ using namespace std;
 int calFac(int nu,int de){return (nu%de)?calFac(de,nu%de):de;}
 class fraction{
     public:
-    int nu,de,itg;   //numerator,denominator,and integer part;
+    long long nu,de,itg;   //numerator,denominator,and integer part;
     fraction(int n=0,int d=1):nu(n),de(d),itg(0){};
     void simplify(){
         int fac = calFac(nu,de);
@@ -36,7 +36,7 @@ void fraction::facMti(fraction &oth){
 }
 int main(){
     fraction fac1,fac2,facRes;
-    scanf("%d/%d%d/%d",&fac1.nu,&fac1.de,&fac2.nu,&fac2.de);
+    scanf("%lld/%lld%lld/%lld",&fac1.nu,&fac1.de,&fac2.nu,&fac2.de);
     fac1.simplify(); fac2.simplify(); facRes = fac1;
 
     //illustrate the calculation of addition
