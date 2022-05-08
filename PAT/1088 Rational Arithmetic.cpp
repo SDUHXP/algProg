@@ -1,12 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
-int calFac(int nu,int de){return (nu%de)?calFac(de,nu%de):de;}
+long long calFac(long long nu,long long de){return (nu%de)?calFac(de,nu%de):de;}
 class fraction{
     public:
     long long nu,de,itg;   //numerator,denominator,and integer part;
-    fraction(int n=0,int d=1):nu(n),de(d),itg(0){};
+    fraction(long long n=0,long long d=1):nu(n),de(d),itg(0){};
+    void operator =(fraction &oth){nu = oth.nu; de = oth.de; itg = oth.itg;}
     void simplify(){
-        int fac = calFac(nu,de);
+        long long fac = calFac(nu,de);
         nu /= fac; de /= fac;
         if(de<0)  { nu *= -1; de *= -1;}
         return;
