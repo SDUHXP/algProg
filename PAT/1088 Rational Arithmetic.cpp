@@ -22,19 +22,16 @@ class fraction{
         return;
     }
     void facAdd(fraction &oth);
-    void facMin(fraction &oth);
     void facMti(fraction &oth);
-    void facDiv(fraction &oth);
 };
 
 void fraction::facAdd(fraction &oth){
-    itg += oth.itg;
     nu = nu*oth.de + oth.nu*de;
     de = de*oth.de; simplify();
     return;
 }
 void fraction::facMti(fraction &oth){
-    itg = itg*oth.itg;
+    nu *= oth.nu;   de *= oth.de;
     simplify(); return;
 }
 int main(){
@@ -53,6 +50,18 @@ int main(){
     printf(" = "); facRes.facAdd(facTmp); facRes.prtFac();
     facRes = fac1;  printf("\n");
 
+    //illustrate the calculation of multiply
+    fac1.prtFac(); printf(" * "); fac2.prtFac();
+    printf(" = "); facRes.facMti(fac2); facRes.prtFac();
+    facRes = fac1;  printf("\n");
+
+    //illustrate the calculation of divide
+    facTmp.nu = fac2.de;   facTmp.de = fac2.nu;
+    fac1.prtFac(); printf(" / "); fac2.prtFac();
+    printf(" = ");
+    if(facTmp.de==0) {printf("Inf\n"); return 0;}
+    facRes.facMti(facTmp); facRes.prtFac();
+    facRes = fac1;  printf("\n");
 
     return 0;
 }
