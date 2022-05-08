@@ -1,73 +1,58 @@
 #include <bits/stdc++.h>
 using namespace std;
-long long calFac(long long numerator,long long denominator){
-    while(numerator%denominator){
-        long long temp = numerator%denominator;
-        numerator = denominator; denominator = temp;
+int calFac(int nu,int de){return (nu%de)?calFac(de,nu%de):de;}
+class fraction{
+    public:
+    int nu,de,itg;   //numerator,denominator,and integer part;
+    fraction(int n=0,int d=1):nu(n),de(d),itg(0){};
+    void simplify(){
+        int fac = calFac(nu,de);
+        nu /= fac; de /= fac;
+        if(de<0)  { nu *= -1; de *= -1;}
+        return;
     }
-    return abs(denominator);
-}
-long long simplify(long long& numerator,long long& denominator){
-    long long maxFac = calFac(numerator,denominator);
-    numerator /= maxFac;  denominator /= maxFac;
-    if(denominator<0) {numerator *= -1; denominator *= -1;}
-    long long quotient = numerator/denominator;
-    return quotient;
-}
-void prtFac(long long numerator,long long denominator){
-    if(numerator==0) {printf("0"); return;}
-    bool negative = false;
-    if(numerator<0)  {printf("(-"); negative = true; numerator = -numerator;}
-    if(numerator/denominator!=0) printf("%d",numerator/denominator);
-    if(numerator%denominator!=0){
-      if(numerator/denominator) printf(" ");
-      printf("%lld/%lld",numerator%denominator,denominator);
+    void prtFac(){
+        bool flag = false;
+        if(nu<0) {printf("(-"); flag = true; nu *= -1;}
+        if (nu/de!=0 && nu%de!=0) printf("%d %d/%d",nu/de,nu%de,de);
+        else if(nu/de != 0) printf("%d",nu/de);
+        else if(nu%de != 0) printf("%d/%d",nu%de,de);
+        else printf("0");
+        if(flag){ printf(")"); nu *= -1;}
+        return;
     }
-    if(negative) printf(")");
+    void facAdd(fraction &oth);
+    void facMin(fraction &oth);
+    void facMti(fraction &oth);
+    void facDiv(fraction &oth);
+};
+
+void fraction::facAdd(fraction &oth){
+    itg += oth.itg;
+    nu = nu*oth.de + oth.nu*de;
+    de = de*oth.de; simplify();
     return;
 }
-void facAdd(long long& numeratorRes,long long& denominatorRes,long long numerator,long long denominator){
-    numeratorRes = numeratorRes*denominator + numerator*denominatorRes;
-    denominatorRes = denominatorRes*denominator;
-    simplify(numeratorRes,denominatorRes);
-    return;
-}
-void facMultiply(long long& numeratorRes,long long& denominatorRes,long long numerator,long long denominator){
-    numeratorRes *= numerator;
-    denominatorRes *= denominator;
-    simplify(numeratorRes,denominatorRes);
-    return;
+void fraction::facMti(fraction &oth){
+    itg = itg*oth.itg;
+    simplify(); return;
 }
 int main(){
-    long long numerator1,denominator1,numerator2,denominator2;
-    long long numeratorRes,denominatorRes;
-    scanf("%lld/%lld%lld/%lld",&numerator1,&denominator1,&numerator2,&denominator2);
-    simplify(numerator1,denominator1);  simplify(numerator2,denominator2);
+    fraction fac1,fac2,facRes;
+    scanf("%d/%d%d/%d",&fac1.nu,&fac1.de,&fac2.nu,&fac2.de);
+    fac1.simplify(); fac2.simplify(); facRes = fac1;
 
-    prtFac(numerator1,denominator1);    printf(" + ");
-    prtFac(numerator2,denominator2);    printf(" = ");
-    numeratorRes = numerator1; denominatorRes = denominator1;
-    facAdd(numeratorRes,denominatorRes,numerator2,denominator2);
-    prtFac(numeratorRes,denominatorRes); printf("\n");
+    //illustrate the calculation of addition
+    fac1.prtFac(); printf(" + "); fac2.prtFac();
+    printf(" = "); facRes.facAdd(fac2); facRes.prtFac();
+    facRes = fac1;  printf("\n");
 
-    prtFac(numerator1,denominator1);    printf(" - ");
-    prtFac(numerator2,denominator2);    printf(" = ");
-    numeratorRes = numerator1; denominatorRes = denominator1;
-    facAdd(numeratorRes,denominatorRes,-numerator2,denominator2);
-    prtFac(numeratorRes,denominatorRes); printf("\n");
+    //illustrate the calculation of reduction
+    fraction facTmp = fraction(-fac2.nu,fac2.de);
+    fac1.prtFac(); printf(" - "); fac2.prtFac();
+    printf(" = "); facRes.facAdd(facTmp); facRes.prtFac();
+    facRes = fac1;  printf("\n");
 
-    prtFac(numerator1,denominator1);    printf(" * ");
-    prtFac(numerator2,denominator2);    printf(" = ");
-    numeratorRes = numerator1; denominatorRes = denominator1;
-    facMultiply(numeratorRes,denominatorRes,numerator2,denominator2);
-    prtFac(numeratorRes,denominatorRes); printf("\n");
-
-    prtFac(numerator1,denominator1);    printf(" / ");
-    prtFac(numerator2,denominator2);    printf(" = ");
-    numeratorRes = numerator1; denominatorRes = denominator1;
-    if(numerator2==0){printf("Inf\n");  return 0; }
-    facMultiply(numeratorRes,denominatorRes,denominator2,numerator2);
-    prtFac(numeratorRes,denominatorRes);  printf("\n");
 
     return 0;
 }
