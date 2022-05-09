@@ -20,7 +20,6 @@ int main(){
         int cnt1 = sets[id1].size();
         int cnt2 = sets[id2].size();
         int cnt = resSet.size();
-        printf("cnt1 = %d cnt2 = %d cnt = %d \n",cnt1,cnt2,cnt);
         printf("%.1f%\n",(cnt1+cnt2-cnt)*100.0/cnt);
     }
     return 0;
