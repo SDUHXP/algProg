@@ -17,22 +17,22 @@ int insKey(int val,int M){
     int pos = val%M;
     int dis = 0;
     while(pos<M && posSta[pos]){
-        pos += dis*dis;
         dis ++;
+        pos = val%M + dis*dis;
     }
     if(pos<M) posSta[pos] = true;  //true stands for occupied
     return pos;
-
 }
 int main(){
-    int M,N; scanf("%d%d",&M,&N);
     calPrime();
+    int M,N; scanf("%d%d",&M,&N);
     for(;M<maxN;M++) if(primTable[M]) break;
     for(int i=1;i<=N;i++){
         int key; scanf("%d",&key);
         int pos = insKey(key,M);
-        if(pos<M) printf("%d ",pos);
+        if(pos<M) printf("%d",pos);
         else printf("-");
+        if(i!=N) printf(" ");
     }
     return 0;
 }
