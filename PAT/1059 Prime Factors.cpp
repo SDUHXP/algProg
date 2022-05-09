@@ -12,7 +12,6 @@ int init(){
     for(int i=2;i<maxN;i++)
         if(primeTab[i]==true) primes.push_back(i);
 
-//    for(auto it:primes) printf("%d\n",it);
     return 0;
 }
 int main(){
@@ -32,4 +31,6 @@ int main(){
         }
         idx++;
     }
+    if(idx==0) printf("%d\n",N);   //means N equals 1
+    return 0;
 }
