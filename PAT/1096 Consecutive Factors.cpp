@@ -5,8 +5,11 @@ int main(){
     long long N; scanf("%ld",&N);
     long long sqrN = sqrt(N) + 1;
     for(int i=2;i<=sqrN;i++){
-        int j = i;
-        for(;j<=sqrN;j++){ if(N%j!=0) break;}
+        int j = i; int tmpN = N;
+        for(;j<=sqrN;j++){
+            if(tmpN%j!=0) break;
+            tmpN /= j;
+        }
         if(j-i>resInterval.second-resInterval.first){
             resInterval.first = i;
             resInterval.second = j;
