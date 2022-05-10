@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 map<string,int>keyCnt;
-//bool isalphaNumerical(char c){return (isalpha(c) || isdigit(c));}
 string alphaNum = "abcdefghijklmnopqrstuvwxyz0123456789";
 vector<string> maxKey; int maxNum;
 int main(){
@@ -26,8 +25,6 @@ int main(){
     }
     sort(maxKey.begin(),maxKey.end());
     cout<<maxKey[0]<<" "<<maxNum<<endl;
-
-
     return 0;
 }
 
