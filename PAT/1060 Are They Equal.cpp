@@ -7,15 +7,10 @@ string cvtSci(string str,int N){
     else ptPos = str.length();
     int digPos = str.find_first_not_of('0');
     if(digPos!=-1) res += str.substr(digPos,N);
-    else {
-        res += str.substr(0,N);
-        if(res.length()!=N+2) res.append(N+2-res.length(),'0');
-        res += "*10^0";
-        return res;
-    }
+    else res += str.substr(0,N);
     if(res.length()!=N+2) res.append(N+2-res.length(),'0');
     res += "*10^";
-    res += to_string(ptPos-digPos);
+    res += to_string(digPos!=-1?ptPos-digPos:0);
     return res;
 }
 
