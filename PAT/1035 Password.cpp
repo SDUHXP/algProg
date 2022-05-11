@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 string patten = "1l0O";
-unordered_map<string,string>user;
+vector<pair<string,string>>user;
 bool modify(string& str){
     int pos = str.find_first_of(patten);   //mean didn't been modified
     if(pos==-1) return false;
@@ -19,9 +19,7 @@ int main(){
     string account,password;
     for(int i=0;i<N;i++){
         cin>>account>>password;
-        if(modify(password)==true){
-            user[account] = password;
-        }
+        if(modify(password)==true){ user.push_back(make_pair(account,password));}
     }
     if(user.size()==0){
         if(N==1) printf("There is 1 account and no account is modified\n");
@@ -29,8 +27,8 @@ int main(){
     }
     else{
         cout<<user.size()<<endl;
-        for(auto it=user.begin();it!=user.end();it++)
-            cout<<it->first<<" "<<it->second<<endl;
+        for(auto it:user)
+            cout<<it.first<<" "<<it.second<<endl;
     }
     return 0;
 }
