@@ -4,8 +4,7 @@ char dig[10][10] = {"ling","yi","er","san","si","wu","liu","qi","ba","jiu"};
 char wt[5][10] = {""," Shi "," Bai "," Qian "};
 char seg[3][10] = {""," Wan "," Yi "};
 string cvtHan(int val){
-    string str = "";
-    int exp = 3;
+    string str = ""; int exp = 3;
     while(val && exp>=0){
         int weight = pow(10,exp);
         if(val>=weight) {str += dig[val/weight]; str +=  wt[exp]; }
@@ -26,6 +25,8 @@ int main(){
         }
         exp -= 4;
     }
+    for(int i=0;i<res.size()-1;i++)
+        if(res[i]==res[i+1] && res[i]==' ') res.erase(i+1,1);
     cout<<res<<endl;
     return 0;
 }
