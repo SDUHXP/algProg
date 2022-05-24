@@ -4,7 +4,7 @@ int main(){
     int N; scanf("%d",&N);
     vector<int>rcd(N+1);
     for(int i=1;i<=N;i++) scanf("%d",&rcd[i]);
-    for(int i=1;i<=N;i++)
+    for(int i=1;i<N;i++)
         for(int j=i+1;j<=N;j++){
             vector<int>role(N+1,1);
             vector<int>liar;
@@ -17,5 +17,6 @@ int main(){
                 return 0;
             }
         }
+    printf("No Solution");
     return 0;
 }
