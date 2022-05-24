@@ -7,9 +7,7 @@ int main(){
         int val; scanf("%d",&val);
         numCnt[val]++;
     }
-    int maxKey = numCnt.rbegin()->first;
-    if(maxKey<1) printf("1");
-    for(int i=1;i<=maxKey+1;i++)
+    for(int i=1;;i++)
         if(numCnt[i]==0){ printf("%d",i); break;}
     return 0;
 }
